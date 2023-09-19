@@ -1,0 +1,19 @@
+.week {
+  display: flex;
+  width: 50%;
+  justify-content: space-around;
+}
+
+.outside-month {
+  color: gray;
+}
+.day {
+  font-size: 1.5rem;
+}
+.current-day {
+  color: blue;
+}
+.selected-day {
+  background-color: blue;
+  color: white;
+}
