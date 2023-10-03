@@ -3,13 +3,14 @@ import "./datePicker.css";
 import Calendar from "./components/Calendar";
 import defaultLocale from "date-fns/locale/en-US";
 
-import { addYears, newDate, parseDate, formatDate } from "./utils/utils";
+import { addYears, parseDate, formatDate } from "./utils/utils";
 
 const DatePicker = (props) => {
   const { label, placeholder, selected, onChange } = props;
   const [inputVal, setInputVal] = useState("");
   const formatDateString = "MM/dd/yyyy";
-  const [preSelection, setPreSelection] = useState(newDate());
+  // const [preSelection, setPreSelection] = useState(newDate());
+  const [selectedDate, setSelectedDate] = useState(selected);
   const monthDisplayFormat = "MMM yyyy";
   const fixedHeight = false;
   const showMonthArrow = true;
@@ -25,11 +26,20 @@ const DatePicker = (props) => {
     if (date) onChange(date);
   };
 
+  const handleSelect = (day) => {
+    const date = formatDate(day, formatDateString, defaultLocale);
+    setSelectedDate(day);
+    setInputVal(date);
+
+    if (day) onChange(day);
+    onDayClicked();
+  };
+
   const onInputClicked = () => {
     setShowCalendar(true);
   };
 
-  const dayClicked = () => {
+  const onDayClicked = () => {
     setShowCalendar(false);
   };
 
@@ -55,9 +65,10 @@ const DatePicker = (props) => {
         minDate={minDate}
         onClickOutside={() => setShowCalendar(false)}
         show={showCalendar}
-        selected={selected}
-        dayClicked={dayClicked}
-        preSelection={preSelection}
+        selected={selectedDate}
+        onSelect={handleSelect}
+        setInputVal={setInputVal}
+        // preSelection={preSelection}
         defaultLocale={defaultLocale}
       />
     </>
