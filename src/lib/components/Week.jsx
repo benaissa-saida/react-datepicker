@@ -11,6 +11,10 @@ function Week(props) {
     );
     const days = [];
 
+    const handleClick = (day) => {
+      props.onSelect(day);
+    };
+
     return days.concat(
       [0, 1, 2, 3, 4, 5, 6].map((i) => {
         const day = addDays(startOfWeek, i);
@@ -23,6 +27,7 @@ function Week(props) {
             maxDate={props.maxDate}
             locale={props.locale}
             selected={props.selected}
+            onSelect={handleClick.bind(this, day)}
           />
         );
       })

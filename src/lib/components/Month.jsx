@@ -17,6 +17,10 @@ function Month(props) {
     return isSameMonth(startOfWeek, day) || isSameMonth(endOfWeek, day);
   };
 
+  const handleClick = (day) => {
+    props.onSelect(day);
+  };
+
   const renderWeeks = () => {
     const weeks = [];
 
@@ -39,6 +43,7 @@ function Month(props) {
           minDate={props.minDate}
           maxDate={props.maxDate}
           selected={props.selected}
+          onSelect={handleClick}
         />
       );
 
