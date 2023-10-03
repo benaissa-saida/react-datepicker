@@ -17,3 +17,8 @@
   background-color: blue;
   color: white;
 }
+.hover-day {
+  background-color: orange;
+  color: white;
+  cursor: pointer;
+}
