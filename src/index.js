@@ -4,15 +4,11 @@ import { DatePicker } from "./lib";
 
 const App = () => {
   const [startDate, setStartDate] = useState(new Date());
-  console.log(startDate);
   return (
     <div style={{ width: 640, margin: "15px auto" }}>
       <DatePicker
         selected={startDate}
-        onChange={(date) => {
-          console.log("date" + date);
-          setStartDate(date);
-        }}
+        onChange={(date) => setStartDate(date)}
       />
     </div>
   );

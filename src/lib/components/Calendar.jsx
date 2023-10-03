@@ -41,10 +41,8 @@ const Calendar = (props) => {
 
   const getDateInView = () => {
     const { preSelection, selected, maxDate, minDate } = props;
-    console.log("selected" + selected, "preSelection" + preSelection);
     const current = newDate();
     const initialDate = selected || preSelection;
-    console.log("init", initialDate);
     if (initialDate) {
       return initialDate;
     } else {
@@ -58,7 +56,6 @@ const Calendar = (props) => {
   };
 
   const [date, setDate] = useState(getDateInView());
-  console.log(date);
   const increaseMonth = () => setDate(addMonths(date, 1));
 
   const decreaseMonth = () => setDate(subMonths(date, 1));

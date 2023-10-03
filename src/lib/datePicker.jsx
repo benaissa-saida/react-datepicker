@@ -7,7 +7,6 @@ import { addYears, newDate, parseDate, formatDate } from "./utils/utils";
 
 const DatePicker = (props) => {
   const { label, placeholder, selected, onChange } = props;
-  console.log("inDatePicker" + selected);
   const [inputVal, setInputVal] = useState("");
   const formatDateString = "MM/dd/yyyy";
   const [preSelection, setPreSelection] = useState(newDate());
