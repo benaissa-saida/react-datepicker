@@ -55,6 +55,10 @@ const Calendar = (props) => {
     return current;
   };
 
+  const handleClick = (day) => {
+    props.onSelect(day);
+  };
+
   const [date, setDate] = useState(getDateInView());
   const increaseMonth = () => setDate(addMonths(date, 1));
 
@@ -81,6 +85,10 @@ const Calendar = (props) => {
 
     const newDate = modeMapper[mode]();
     setDate(newDate);
+  };
+
+  const setTodayDate = () => {
+    props.onSelect(newDate());
   };
 
   const renderMonthAndYear = () => {
@@ -115,10 +123,7 @@ const Calendar = (props) => {
           </button>
         ) : null}
         {
-          <button
-            type="button"
-            onClick={() => changeShownDate(newDate(), "set")}
-          >
+          <button type="button" onClick={() => setTodayDate()}>
             &hearts;
           </button>
         }
@@ -168,6 +173,7 @@ const Calendar = (props) => {
           fixedHeight={props.fixedHeight}
           peekNextMonth={false}
           selected={props.selected}
+          onSelect={handleClick}
         />
       </div>
     );
