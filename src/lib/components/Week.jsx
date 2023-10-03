@@ -12,8 +12,8 @@ function Week(props) {
     const days = [];
 
     return days.concat(
-      [0, 1, 2, 3, 4, 5, 6].map((offset) => {
-        const day = addDays(startOfWeek, offset);
+      [0, 1, 2, 3, 4, 5, 6].map((i) => {
+        const day = addDays(startOfWeek, i);
         return (
           <Day
             key={day.valueOf()}
@@ -21,9 +21,8 @@ function Week(props) {
             month={props.month}
             minDate={props.minDate}
             maxDate={props.maxDate}
-            monthShowsDuplicateDaysEnd={props.monthShowsDuplicateDaysEnd}
-            monthShowsDuplicateDaysStart={props.monthShowsDuplicateDaysStart}
             locale={props.locale}
+            selected={props.selected}
           />
         );
       })
