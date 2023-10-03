@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import classnames from "classnames";
 
 import {
@@ -10,6 +10,21 @@ import {
 } from "../utils/utils";
 
 const DayTest = (props) => {
+  const [dayHover, setDayHover] = useState(false);
+
+  const handleMouseEvent = (event) => {
+    switch (event.type) {
+      case "mouseenter":
+        setDayHover(true);
+        break;
+      case "blur":
+      case "mouseleave":
+        setDayHover(false);
+        break;
+      default:
+        setDayHover(false);
+    }
+  };
   const isSameDayOfProps = (other) => isSameDay(props.day, other);
   // const isWeekend = () => {
   //   const weekday = getDay(this.props.day);
@@ -35,12 +50,16 @@ const DayTest = (props) => {
     // if (props.monthShowsDuplicateDaysStart && isBeforeMonth()) return null;
     return getDate(props.day);
   };
+  const handleClick = (event) => {
+    props.onSelect(event);
+  };
 
   const getClasses = () => {
     return classnames("day", {
       "outside-month": isAfterMonth() || isBeforeMonth(),
       "current-day": isCurrentDay(),
       "selected-day": isSelected(),
+      "hover-day": dayHover,
     });
   };
 
@@ -63,7 +82,15 @@ const DayTest = (props) => {
     //   </span>
     // </button>
     <div>
-      <span className={getClasses()}>{renderDays()}</span>
+      <span
+        className={getClasses()}
+        onBlur={handleMouseEvent}
+        onMouseEnter={handleMouseEvent}
+        onMouseLeave={handleMouseEvent}
+        onClick={handleClick}
+      >
+        {renderDays()}
+      </span>
     </div>
   );
 };
