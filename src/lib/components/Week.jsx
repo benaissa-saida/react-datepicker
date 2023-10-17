@@ -1,5 +1,5 @@
+import PropTypes from "prop-types";
 import { getStartOfWeek, addDays } from "../utils/utils";
-// import DayTest from "./DayTest";
 import Day from "./Day";
 
 function Week(props) {
@@ -16,8 +16,8 @@ function Week(props) {
     };
 
     return days.concat(
-      [0, 1, 2, 3, 4, 5, 6].map((i) => {
-        const day = addDays(startOfWeek, i);
+      [0, 1, 2, 3, 4, 5, 6].map((amount) => {
+        const day = addDays(startOfWeek, amount);
         return (
           <Day
             key={day.valueOf()}
@@ -26,7 +26,7 @@ function Week(props) {
             minDate={props.minDate}
             maxDate={props.maxDate}
             locale={props.locale}
-            selected={props.selected}
+            selectedDate={props.selectedDate}
             onSelect={handleClick.bind(this, day)}
           />
         );
@@ -34,11 +34,19 @@ function Week(props) {
     );
   };
 
-  return (
-    <div>
-      <span className="week">{renderDays()}</span>
-    </div>
-  );
+  return <div className="calendar-week">{renderDays()}</div>;
 }
+
+Week.protoTypes = {
+  locale: PropTypes.object.isRequired,
+  minDate: PropTypes.object.isRequired,
+  maxDate: PropTypes.object.isRequired,
+  selectedDate: PropTypes.instanceOf(Date).isRequired,
+  onSelect: PropTypes.func.isRequired,
+  day: PropTypes.instanceOf(Date).isRequired,
+  calendarStartOn: PropTypes.number.isRequired,
+  key: PropTypes.number,
+  month: PropTypes.number.isRequired,
+};
 
 export default Week;

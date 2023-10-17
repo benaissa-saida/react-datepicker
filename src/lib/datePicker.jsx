@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import "./datePicker.css";
 import Calendar from "./components/Calendar";
 import defaultLocale from "date-fns/locale/en-US";
@@ -9,20 +10,19 @@ const DatePicker = (props) => {
   const { label, placeholder, selected, onChange } = props;
   const [inputVal, setInputVal] = useState("");
   const formatDateString = "MM/dd/yyyy";
-  // const [preSelection, setPreSelection] = useState(newDate());
   const [selectedDate, setSelectedDate] = useState(selected);
-  const monthDisplayFormat = "MMM yyyy";
-  const fixedHeight = false;
   const showMonthArrow = true;
   const showMonthAndYearPickers = true;
 
   const maxDate = addYears(new Date(), 27);
   const minDate = addYears(new Date(), -100);
-  const [showCalendar, setShowCalendar] = useState(true);
+  const [showCalendar, setShowCalendar] = useState(false);
 
   const handleChange = (event) => {
-    setInputVal(event.target.value);
     let date = parseDate(event.target.value, formatDateString, defaultLocale);
+    setSelectedDate(date);
+    setInputVal(event.target.value);
+
     if (date) onChange(date);
   };
 
@@ -57,22 +57,25 @@ const DatePicker = (props) => {
         />
       </div>
       <Calendar
-        monthDisplayFormat={monthDisplayFormat}
-        fixedHeight={fixedHeight}
-        showMonthArrow={showMonthArrow}
+        showMonthBtn={showMonthArrow}
         showMonthAndYearPickers={showMonthAndYearPickers}
         maxDate={maxDate}
         minDate={minDate}
         onClickOutside={() => setShowCalendar(false)}
-        show={showCalendar}
-        selected={selectedDate}
+        showCalendar={showCalendar}
+        selectedDate={selectedDate}
         onSelect={handleSelect}
-        setInputVal={setInputVal}
-        // preSelection={preSelection}
         defaultLocale={defaultLocale}
       />
     </>
   );
+};
+
+DatePicker.protoTypes = {
+  label: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  selected: PropTypes.instanceOf(Date).isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default DatePicker;

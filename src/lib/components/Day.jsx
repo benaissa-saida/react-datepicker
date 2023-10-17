@@ -1,15 +1,10 @@
+import PropTypes from "prop-types";
 import React, { useState } from "react";
 import classnames from "classnames";
 
-import {
-  newDate,
-  //  getDay,
-  getDate,
-  getMonth,
-  isSameDay,
-} from "../utils/utils";
+import { newDate, getDate, getMonth, isSameDay } from "../utils/utils";
 
-const DayTest = (props) => {
+const Day = (props) => {
   const [dayHover, setDayHover] = useState(false);
 
   const handleMouseEvent = (event) => {
@@ -17,7 +12,6 @@ const DayTest = (props) => {
       case "mouseenter":
         setDayHover(true);
         break;
-      case "blur":
       case "mouseleave":
         setDayHover(false);
         break;
@@ -26,10 +20,7 @@ const DayTest = (props) => {
     }
   };
   const isSameDayOfProps = (other) => isSameDay(props.day, other);
-  // const isWeekend = () => {
-  //   const weekday = getDay(this.props.day);
-  //   return weekday === 0 || weekday === 6;
-  // };
+
   const isAfterMonth = () => {
     return (
       props.month !== undefined &&
@@ -43,11 +34,9 @@ const DayTest = (props) => {
     );
   };
   const isCurrentDay = () => isSameDayOfProps(newDate());
-  const isSelected = () => isSameDayOfProps(props.selected);
+  const isSelected = () => isSameDayOfProps(props.selectedDate);
 
   const renderDays = () => {
-    // if (props.monthShowsDuplicateDaysEnd && isAfterMonth()) return null;
-    // if (props.monthShowsDuplicateDaysStart && isBeforeMonth()) return null;
     return getDate(props.day);
   };
   const handleClick = (event) => {
@@ -64,35 +53,26 @@ const DayTest = (props) => {
   };
 
   return (
-    // <div>
-    //   <ul>
-    //     {days.map((day, index) => (
-    //       <li key={index}>
-    //         {format(day, "d")} - {format(day, "EEEE")}
-    //       </li>
-    //     ))}
-    //   </ul>
-    // </div>
-
-    // <button type="button">
-    //   <span>
-    //     {dayContentRenderer?.(day) || (
-    //       <span>{format(day, dayDisplayFormat)}</span>
-    //     )}
-    //   </span>
-    // </button>
-    <div>
-      <span
-        className={getClasses()}
-        onBlur={handleMouseEvent}
-        onMouseEnter={handleMouseEvent}
-        onMouseLeave={handleMouseEvent}
-        onClick={handleClick}
-      >
-        {renderDays()}
-      </span>
+    <div
+      className={getClasses()}
+      onMouseEnter={handleMouseEvent}
+      onMouseLeave={handleMouseEvent}
+      onClick={handleClick}
+    >
+      <span>{renderDays()}</span>
     </div>
   );
 };
 
-export default DayTest;
+Day.protoTypes = {
+  locale: PropTypes.object.isRequired,
+  minDate: PropTypes.object.isRequired,
+  maxDate: PropTypes.object.isRequired,
+  selectedDate: PropTypes.instanceOf(Date).isRequired,
+  onSelect: PropTypes.func.isRequired,
+  day: PropTypes.instanceOf(Date).isRequired,
+  key: PropTypes.number,
+  month: PropTypes.number.isRequired,
+};
+
+export default Day;

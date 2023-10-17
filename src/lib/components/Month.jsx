@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Week from "./Week";
 
 import {
@@ -42,7 +43,7 @@ function Month(props) {
           locale={props.locale}
           minDate={props.minDate}
           maxDate={props.maxDate}
-          selected={props.selected}
+          selectedDate={props.selectedDate}
           onSelect={handleClick}
         />
       );
@@ -58,7 +59,18 @@ function Month(props) {
     return weeks;
   };
 
-  return <>{renderWeeks()}</>;
+  return <div className="calendar-weeks">{renderWeeks()}</div>;
 }
+
+Month.protoTypes = {
+  locale: PropTypes.object.isRequired,
+  minDate: PropTypes.object.isRequired,
+  maxDate: PropTypes.object.isRequired,
+  selectedDate: PropTypes.instanceOf(Date).isRequired,
+  onSelect: PropTypes.func.isRequired,
+  day: PropTypes.instanceOf(Date).isRequired,
+  calendarStartOn: PropTypes.number.isRequired,
+  peekNextMonth: PropTypes.bool.isRequired,
+};
 
 export default Month;

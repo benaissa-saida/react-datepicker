@@ -1,13 +1,21 @@
 import React, { useState, useRef, useEffect } from "react";
+import PropTypes from "prop-types";
 import Month from "./Month";
-// import defaultLocale from "date-fns/locale/en-US";
+import usePrevious from "../utils/usePrevious";
+import home from "../../assets/home.svg";
+import caretLeft from "../../assets/caret-left.svg";
+import caretRight from "../../assets/caret-right.svg";
+
 import {
   newDate,
   setMonth,
   getMonth,
   addMonths,
   subMonths,
-  //   formatDate,
+  getStartOfWeek,
+  getWeekdayMinInLocale,
+  addDays,
+  isSameDay,
   setYear,
   getYear,
   isBefore,
@@ -15,34 +23,10 @@ import {
 } from "../utils/utils";
 
 const Calendar = (props) => {
-  //   const monthDisplayFormat = "MMM yyyy";
-  //   const fixedHeight = false;
-  //   // const monthsShown = 1;
-  //   // let showPreviousMonths;
-  //   const showMonthArrow = true;
-  //   const showMonthAndYearPickers = true;
-
-  //   const maximumDate = addYears(new Date(), 20);
-  //   const minimumDate = addYears(new Date(), -100);
-
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
-        props.onClickOutside && props.onClickOutside();
-      }
-    };
-    document.addEventListener("click", handleClickOutside, true);
-    return () => {
-      document.removeEventListener("click", handleClickOutside, true);
-    };
-  }, [props, props.onClickOutside]);
-
   const getDateInView = () => {
-    const { preSelection, selected, maxDate, minDate } = props;
+    const { selectedDate, maxDate, minDate } = props;
     const current = newDate();
-    const initialDate = selected || preSelection;
+    const initialDate = selectedDate;
     if (initialDate) {
       return initialDate;
     } else {
@@ -54,20 +38,35 @@ const Calendar = (props) => {
     }
     return current;
   };
+  const [date, setDate] = useState(getDateInView());
+  const ref = useRef(null);
+  const previousSelectedDate = usePrevious(props.selectedDate);
+
+  useEffect(() => {
+    if (
+      props.selectedDate &&
+      isSameDay(props.selectedDate, previousSelectedDate)
+    ) {
+      setDate(props.selectedDate);
+    }
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        props.onClickOutside && props.onClickOutside();
+      }
+    };
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  }, [props, previousSelectedDate]);
 
   const handleClick = (day) => {
     props.onSelect(day);
   };
 
-  const [date, setDate] = useState(getDateInView());
   const increaseMonth = () => setDate(addMonths(date, 1));
 
   const decreaseMonth = () => setDate(subMonths(date, 1));
-  // const formatWeekDay = () => getWeekdayMinInLocale(date, defaultLocale);
-
-  // const decreaseYear = () => setDate(subYears(date, 1));
-  // const increaseYear = () =>
-  //   setDate(addYears(date, showYearPicker ? yearItemNumber : 1));
 
   const getMonthNames = () => {
     return [...Array(12).keys()].map((i) =>
@@ -91,7 +90,25 @@ const Calendar = (props) => {
     props.onSelect(newDate());
   };
 
-  const renderMonthAndYear = () => {
+  const header = (date) => {
+    const startOfWeek = getStartOfWeek(date, props.defaultLocale, 0);
+    const dayNames = [];
+
+    return dayNames.concat(
+      [0, 1, 2, 3, 4, 5, 6].map((offset) => {
+        const day = addDays(startOfWeek, offset);
+        const weekDayName = getWeekdayMinInLocale(day, props.defaultLocale);
+
+        return (
+          <div key={offset} className="calendar-weekday">
+            {weekDayName}
+          </div>
+        );
+      })
+    );
+  };
+
+  const renderCalendarHeader = () => {
     const { maxDate, minDate } = props;
     const upperYearLimit = maxDate.getFullYear();
     const lowerYearLimit = minDate.getFullYear();
@@ -116,19 +133,27 @@ const Calendar = (props) => {
     );
 
     return (
-      <div>
-        {props.showMonthArrow ? (
-          <button type="button" onClick={() => decreaseMonth()}>
-            &lsaquo;
+      <div className="calendar-monthpicker">
+        {props.showMonthBtn ? (
+          <button
+            className="calendar-monthpicker__prevBtn"
+            type="button"
+            onClick={() => decreaseMonth()}
+          >
+            <img src={caretLeft} alt="decrease month" />
           </button>
         ) : null}
         {
-          <button type="button" onClick={() => setTodayDate()}>
-            &hearts;
+          <button
+            className="calendar-monthpicker__todayBtn"
+            type="button"
+            onClick={() => setTodayDate()}
+          >
+            <img src={home} alt="set today date" />
           </button>
         }
         {props.showMonthAndYearPickers ? (
-          <span>
+          <span className="calendar-monthAndYear">
             <span>
               <select
                 value={getMonth(date)}
@@ -148,9 +173,13 @@ const Calendar = (props) => {
             </span>
           </span>
         ) : null}
-        {props.showMonthArrow ? (
-          <button type="button" onClick={() => increaseMonth()}>
-            &rsaquo;
+        {props.showMonthBtn ? (
+          <button
+            className="calendar-monthpicker__nextBtn"
+            type="button"
+            onClick={() => increaseMonth()}
+          >
+            <img src={caretRight} alt="increase month" />
           </button>
         ) : null}
       </div>
@@ -163,30 +192,43 @@ const Calendar = (props) => {
     const monthDate = addMonths(fromMonthDate, 0);
 
     return (
-      <div>
+      <div className="calendar-datepicker">
+        <div className="calendar-weekdays">{header(monthDate)}</div>
+
         <Month
           day={monthDate}
           calendarStartOn={0}
           locale={props.defaultLocale}
           minDate={props.minDate}
           maxDate={props.maxDate}
-          fixedHeight={props.fixedHeight}
           peekNextMonth={false}
-          selected={props.selected}
+          selectedDate={props.selectedDate}
           onSelect={handleClick}
         />
       </div>
     );
   };
 
-  if (!props.show) return null;
+  if (!props.showCalendar) return null;
 
   return (
-    <div className="simple-form-group" ref={ref}>
-      {renderMonthAndYear()}
+    <div className="calendar-container" ref={ref}>
+      {renderCalendarHeader()}
       {renderWeekdays()}
     </div>
   );
+};
+
+Calendar.protoTypes = {
+  defaultLocale: PropTypes.object.isRequired,
+  minDate: PropTypes.object.isRequired,
+  maxDate: PropTypes.object.isRequired,
+  showMonthBtn: PropTypes.bool.isRequired,
+  showMonthAndYearPickers: PropTypes.bool.isRequired,
+  onClickOutside: PropTypes.func.isRequired,
+  showCalendar: PropTypes.bool.isRequired,
+  selectedDate: PropTypes.instanceOf(Date).isRequired,
+  onSelect: PropTypes.func.isRequired,
 };
 
 export default Calendar;
