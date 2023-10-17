@@ -12,9 +12,6 @@ var _react = _interopRequireWildcard(require("react"));
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _Month = _interopRequireDefault(require("./Month"));
 var _usePrevious = _interopRequireDefault(require("../utils/usePrevious"));
-var _home = _interopRequireDefault(require("../../assets/home.svg"));
-var _caretLeft = _interopRequireDefault(require("../../assets/caret-left.svg"));
-var _caretRight = _interopRequireDefault(require("../../assets/caret-right.svg"));
 var _utils = require("../utils/utils");
 var _jsxRuntime = require("react/jsx-runtime");
 var Calendar = function Calendar(props) {
@@ -129,7 +126,7 @@ var Calendar = function Calendar(props) {
           return decreaseMonth();
         },
         children: /*#__PURE__*/(0, _jsxRuntime.jsx)("img", {
-          src: _caretLeft.default,
+          src: "/svg/caret-left.svg",
           alt: "decrease month"
         })
       }) : null, /*#__PURE__*/(0, _jsxRuntime.jsx)("button", {
@@ -139,7 +136,7 @@ var Calendar = function Calendar(props) {
           return setTodayDate();
         },
         children: /*#__PURE__*/(0, _jsxRuntime.jsx)("img", {
-          src: _home.default,
+          src: "/svg/home.svg",
           alt: "set today date"
         })
       }), props.showMonthAndYearPickers ? /*#__PURE__*/(0, _jsxRuntime.jsxs)("span", {
@@ -168,7 +165,7 @@ var Calendar = function Calendar(props) {
           return increaseMonth();
         },
         children: /*#__PURE__*/(0, _jsxRuntime.jsx)("img", {
-          src: _caretRight.default,
+          src: "/svg/caret-right.svg",
           alt: "increase month"
         })
       }) : null]
