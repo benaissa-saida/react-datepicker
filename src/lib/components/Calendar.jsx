@@ -2,9 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import Month from "./Month";
 import usePrevious from "../utils/usePrevious";
-import home from "../../assets/home.svg";
-import caretLeft from "../../assets/caret-left.svg";
-import caretRight from "../../assets/caret-right.svg";
 
 import {
   newDate,
@@ -140,7 +137,7 @@ const Calendar = (props) => {
             type="button"
             onClick={() => decreaseMonth()}
           >
-            <img src={caretLeft} alt="decrease month" />
+            <img src="/svg/caret-left.svg" alt="decrease month" />
           </button>
         ) : null}
         {
@@ -149,7 +146,7 @@ const Calendar = (props) => {
             type="button"
             onClick={() => setTodayDate()}
           >
-            <img src={home} alt="set today date" />
+            <img src="/svg/home.svg" alt="set today date" />
           </button>
         }
         {props.showMonthAndYearPickers ? (
@@ -179,7 +176,7 @@ const Calendar = (props) => {
             type="button"
             onClick={() => increaseMonth()}
           >
-            <img src={caretRight} alt="increase month" />
+            <img src="/svg/caret-right.svg" alt="increase month" />
           </button>
         ) : null}
       </div>
