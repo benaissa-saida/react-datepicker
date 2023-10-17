@@ -125,9 +125,13 @@ var Calendar = function Calendar(props) {
         onClick: function onClick() {
           return decreaseMonth();
         },
-        children: /*#__PURE__*/(0, _jsxRuntime.jsx)("img", {
-          src: "/svg/caret-left.svg",
-          alt: "decrease month"
+        children: /*#__PURE__*/(0, _jsxRuntime.jsx)("svg", {
+          xmlns: "http://www.w3.org/2000/svg",
+          height: "1rem",
+          viewBox: "0 0 256 512",
+          children: /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+            d: "M9.4 278.6c-12.5-12.5-12.5-32.8 0-45.3l128-128c9.2-9.2 22.9-11.9 34.9-6.9s19.8 16.6 19.8 29.6l0 256c0 12.9-7.8 24.6-19.8 29.6s-25.7 2.2-34.9-6.9l-128-128z"
+          })
         })
       }) : null, /*#__PURE__*/(0, _jsxRuntime.jsx)("button", {
         className: "calendar-monthpicker__todayBtn",
@@ -135,9 +139,13 @@ var Calendar = function Calendar(props) {
         onClick: function onClick() {
           return setTodayDate();
         },
-        children: /*#__PURE__*/(0, _jsxRuntime.jsx)("img", {
-          src: "/svg/home.svg",
-          alt: "set today date"
+        children: /*#__PURE__*/(0, _jsxRuntime.jsx)("svg", {
+          xmlns: "http://www.w3.org/2000/svg",
+          height: "12px",
+          viewBox: "0 0 576 512",
+          children: /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+            d: "M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"
+          })
         })
       }), props.showMonthAndYearPickers ? /*#__PURE__*/(0, _jsxRuntime.jsxs)("span", {
         className: "calendar-monthAndYear",
@@ -164,9 +172,13 @@ var Calendar = function Calendar(props) {
         onClick: function onClick() {
           return increaseMonth();
         },
-        children: /*#__PURE__*/(0, _jsxRuntime.jsx)("img", {
-          src: "/svg/caret-right.svg",
-          alt: "increase month"
+        children: /*#__PURE__*/(0, _jsxRuntime.jsx)("svg", {
+          xmlns: "http://www.w3.org/2000/svg",
+          height: "1rem",
+          viewBox: "0 0 256 512",
+          children: /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+            d: "M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"
+          })
         })
       }) : null]
     });
