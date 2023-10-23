@@ -46,7 +46,7 @@ var DatePicker = function DatePicker(props) {
     var date = (0, _utils.formatDate)(day, formatDateString, _enUS.default);
     setSelectedDate(day);
     setInputVal(date);
-    if (day) onChange(day);
+    if (day) onChange(date);
     onDayClicked();
   };
   var onInputClicked = function onInputClicked() {
