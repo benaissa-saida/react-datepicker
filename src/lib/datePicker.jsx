@@ -31,7 +31,7 @@ const DatePicker = (props) => {
     setSelectedDate(day);
     setInputVal(date);
 
-    if (day) onChange(day);
+    if (day) onChange(date);
     onDayClicked();
   };
 
