@@ -72,8 +72,8 @@ const DatePicker = (props) => {
 };
 
 DatePicker.protoTypes = {
-  label: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  placeholder: PropTypes.string,
   selected: PropTypes.instanceOf(Date).isRequired,
   onChange: PropTypes.func.isRequired,
 };

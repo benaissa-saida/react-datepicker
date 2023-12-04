@@ -14,8 +14,8 @@ import setYear from "date-fns/setYear";
 import startOfDay from "date-fns/startOfDay";
 import startOfWeek from "date-fns/startOfWeek";
 import startOfMonth from "date-fns/startOfMonth";
-import dfIsSameDay from "date-fns/isSameDay";
-import dfIsSameMonth from "date-fns/isSameMonth";
+import dfnsIsSameDay from "date-fns/isSameDay";
+import dfnsIsSameMonth from "date-fns/isSameMonth";
 import isAfter from "date-fns/isAfter";
 import isBefore from "date-fns/isBefore";
 import toDate from "date-fns/toDate";
@@ -29,16 +29,16 @@ export const DEFAULT_YEAR_ITEM_NUMBER = 12;
 export function newDate(value) {
   const d = value
     ? typeof value === "string" || value instanceof String
-      ? parseISO(value)
-      : toDate(value)
+      ? parseISO(value) // return instance of Date
+      : toDate(value) //convert and return instance of Date
     : new Date();
-  return isValid(d) ? d : null;
+  return isValid(d) ? d : null; //if valid return date else return null
 }
 
-export function parseDate(value, dateFormat, locale, minDate) {
+export function parseDate(value, dateFormat, locale) {
   let parsedDate = null;
 
-  parsedDate = parse(value, dateFormat, new Date(), { locale: locale });
+  parsedDate = parse(value, dateFormat, new Date(), { locale: locale }); //return date using the given format date
 
   return isValid(parsedDate) ? parsedDate : null;
 }
@@ -99,7 +99,7 @@ export { isBefore, isAfter };
 
 export function isSameMonth(date1, date2) {
   if (date1 && date2) {
-    return dfIsSameMonth(date1, date2);
+    return dfnsIsSameMonth(date1, date2);
   } else {
     return !date1 && !date2;
   }
@@ -107,7 +107,7 @@ export function isSameMonth(date1, date2) {
 
 export function isSameDay(date1, date2) {
   if (date1 && date2) {
-    return dfIsSameDay(date1, date2);
+    return dfnsIsSameDay(date1, date2);
   } else {
     return !date1 && !date2;
   }

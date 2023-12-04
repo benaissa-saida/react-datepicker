@@ -65,14 +65,14 @@ const Day = (props) => {
 };
 
 Day.protoTypes = {
-  locale: PropTypes.object.isRequired,
+  key: PropTypes.number,
+  day: PropTypes.instanceOf(Date).isRequired,
+  month: PropTypes.number.isRequired,
   minDate: PropTypes.object.isRequired,
   maxDate: PropTypes.object.isRequired,
+  locale: PropTypes.object.isRequired,
   selectedDate: PropTypes.instanceOf(Date).isRequired,
   onSelect: PropTypes.func.isRequired,
-  day: PropTypes.instanceOf(Date).isRequired,
-  key: PropTypes.number,
-  month: PropTypes.number.isRequired,
 };
 
 export default Day;

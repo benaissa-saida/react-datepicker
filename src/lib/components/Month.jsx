@@ -29,11 +29,12 @@ function Month(props) {
 
     let currentWeekStart = getStartOfWeek(
       getStartOfMonth(props.day),
-      props.locale,
-      props.calendarStartOn
+      props.locale
     );
 
+    //as long as the week is in the month
     while (true) {
+      //We send to the array every week
       weeks.push(
         <Week
           key={i}
@@ -63,14 +64,14 @@ function Month(props) {
 }
 
 Month.protoTypes = {
+  day: PropTypes.instanceOf(Date).isRequired,
+  calendarStartOn: PropTypes.number.isRequired,
   locale: PropTypes.object.isRequired,
   minDate: PropTypes.object.isRequired,
   maxDate: PropTypes.object.isRequired,
+  peekNextMonth: PropTypes.bool.isRequired,
   selectedDate: PropTypes.instanceOf(Date).isRequired,
   onSelect: PropTypes.func.isRequired,
-  day: PropTypes.instanceOf(Date).isRequired,
-  calendarStartOn: PropTypes.number.isRequired,
-  peekNextMonth: PropTypes.bool.isRequired,
 };
 
 export default Month;

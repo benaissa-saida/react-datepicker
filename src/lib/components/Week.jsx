@@ -1,14 +1,11 @@
 import PropTypes from "prop-types";
+import React from "react";
 import { getStartOfWeek, addDays } from "../utils/utils";
 import Day from "./Day";
 
 function Week(props) {
   const renderDays = () => {
-    const startOfWeek = getStartOfWeek(
-      props.day,
-      props.locale,
-      props.calendarStartOn
-    );
+    const startOfWeek = getStartOfWeek(props.day, props.locale);
     const days = [];
 
     const handleClick = (day) => {
@@ -16,8 +13,8 @@ function Week(props) {
     };
 
     return days.concat(
-      [0, 1, 2, 3, 4, 5, 6].map((amount) => {
-        const day = addDays(startOfWeek, amount);
+      [0, 1, 2, 3, 4, 5, 6].map((offset) => {
+        const day = addDays(startOfWeek, offset);
         return (
           <Day
             key={day.valueOf()}
@@ -38,15 +35,15 @@ function Week(props) {
 }
 
 Week.protoTypes = {
+  key: PropTypes.number,
+  day: PropTypes.instanceOf(Date).isRequired,
+  calendarStartOn: PropTypes.number.isRequired,
+  month: PropTypes.number.isRequired,
   locale: PropTypes.object.isRequired,
   minDate: PropTypes.object.isRequired,
   maxDate: PropTypes.object.isRequired,
   selectedDate: PropTypes.instanceOf(Date).isRequired,
   onSelect: PropTypes.func.isRequired,
-  day: PropTypes.instanceOf(Date).isRequired,
-  calendarStartOn: PropTypes.number.isRequired,
-  key: PropTypes.number,
-  month: PropTypes.number.isRequired,
 };
 
 export default Week;

@@ -20,6 +20,7 @@ import {
 } from "../utils/utils";
 
 const Calendar = (props) => {
+  //Show date in calendar
   const getDateInView = () => {
     const { selectedDate, maxDate, minDate } = props;
     const current = newDate();
@@ -35,17 +36,21 @@ const Calendar = (props) => {
     }
     return current;
   };
+
   const [date, setDate] = useState(getDateInView());
   const ref = useRef(null);
   const previousSelectedDate = usePrevious(props.selectedDate);
 
   useEffect(() => {
+    //Shows the new selected date in the view
     if (
       props.selectedDate &&
       isSameDay(props.selectedDate, previousSelectedDate)
     ) {
       setDate(props.selectedDate);
     }
+
+    //If user click outside, close calendar
     const handleClickOutside = (event) => {
       if (ref.current && !ref.current.contains(event.target)) {
         props.onClickOutside && props.onClickOutside();
@@ -57,6 +62,7 @@ const Calendar = (props) => {
     };
   }, [props, previousSelectedDate]);
 
+  //If user clicked, date is selected
   const handleClick = (day) => {
     props.onSelect(day);
   };
@@ -66,6 +72,7 @@ const Calendar = (props) => {
   const decreaseMonth = () => setDate(subMonths(date, 1));
 
   const getMonthNames = () => {
+    //For each key give the corresponding month
     return [...Array(12).keys()].map((i) =>
       props.defaultLocale.localize.month(i)
     );
@@ -73,6 +80,7 @@ const Calendar = (props) => {
   const monthNames = getMonthNames();
 
   const changeShownDate = (value, mode = "set") => {
+    //Wrapper mode allows us to have several modes and juggle between them
     const modeMapper = {
       setMonth: () => setMonth(date, value),
       setYear: () => setYear(date, value),
@@ -87,6 +95,7 @@ const Calendar = (props) => {
     props.onSelect(newDate());
   };
 
+  //header for week names
   const header = (date) => {
     const startOfWeek = getStartOfWeek(date, props.defaultLocale, 0);
     const dayNames = [];
@@ -105,6 +114,7 @@ const Calendar = (props) => {
     );
   };
 
+  //return element to change month, year, and select d-day
   const renderCalendarHeader = () => {
     const { maxDate, minDate } = props;
     const upperYearLimit = maxDate.getFullYear();
@@ -205,9 +215,7 @@ const Calendar = (props) => {
   };
 
   const renderWeekdays = () => {
-    const monthsToSubtract = 0;
-    const fromMonthDate = subMonths(date, monthsToSubtract);
-    const monthDate = addMonths(fromMonthDate, 0);
+    const monthDate = addMonths(date, 0);
 
     return (
       <div className="calendar-datepicker">
@@ -238,15 +246,15 @@ const Calendar = (props) => {
 };
 
 Calendar.protoTypes = {
-  defaultLocale: PropTypes.object.isRequired,
-  minDate: PropTypes.object.isRequired,
-  maxDate: PropTypes.object.isRequired,
   showMonthBtn: PropTypes.bool.isRequired,
   showMonthAndYearPickers: PropTypes.bool.isRequired,
+  maxDate: PropTypes.object.isRequired,
+  minDate: PropTypes.object.isRequired,
   onClickOutside: PropTypes.func.isRequired,
   showCalendar: PropTypes.bool.isRequired,
   selectedDate: PropTypes.instanceOf(Date).isRequired,
   onSelect: PropTypes.func.isRequired,
+  defaultLocale: PropTypes.object.isRequired,
 };
 
 export default Calendar;
