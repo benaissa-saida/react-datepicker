@@ -1,1 +1,1 @@
-{ "presets": [["react-app", { "runtime": "automatic" }]] }
+{ "presets": [["react-app", { "absoluteRuntime": false }]] }
